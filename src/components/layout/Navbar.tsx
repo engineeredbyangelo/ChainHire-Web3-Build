@@ -1,9 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Shield, Wallet, Menu, X } from 'lucide-react';
+import { Shield, Wallet, Menu, X, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { useWallet } from '@/contexts/WalletContext';
 
 const navLinks = [
   { label: 'Dashboard', path: '/dashboard' },
@@ -15,6 +16,9 @@ export function Navbar() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const isLanding = location.pathname === '/';
+  const { isConnected, address, disconnect } = useWallet();
+
+  const shortAddress = address ? `${address.slice(0, 6)}...${address.slice(-4)}` : '';
 
   return (
     <nav className={cn(
@@ -24,7 +28,6 @@ export function Navbar() {
         : "glass border-glass-border/30"
     )}>
       <div className="container flex h-16 items-center justify-between">
-        {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg gradient-neon">
             <Shield className="h-4 w-4 text-primary-foreground" />
@@ -33,56 +36,65 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => {
-            const isActive = location.pathname === link.path;
-            return (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={cn(
-                  'relative px-4 py-2 text-sm font-medium rounded-md transition-colors',
-                  isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
-                )}
-              >
-                {isActive && (
-                  <motion.div
-                    layoutId="navbar-indicator"
-                    className="absolute inset-0 rounded-md bg-secondary"
-                    transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10">{link.label}</span>
-              </Link>
-            );
-          })}
-        </div>
+        {isConnected && (
+          <div className="hidden md:flex items-center gap-1">
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.path;
+              return (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={cn(
+                    'relative px-4 py-2 text-sm font-medium rounded-md transition-colors',
+                    isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                  )}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="navbar-indicator"
+                      className="absolute inset-0 rounded-md bg-secondary"
+                      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10">{link.label}</span>
+                </Link>
+              );
+            })}
+          </div>
+        )}
 
-        {/* Wallet Button */}
+        {/* Wallet */}
         <div className="hidden md:flex items-center gap-3">
-          <Button variant="outline" className="glass border-glass-border/50 gap-2 text-sm font-mono">
-            <Wallet className="h-4 w-4" />
-            <span>0x1a2B...9cDe</span>
-          </Button>
+          {isConnected ? (
+            <>
+              <Button variant="outline" className="glass border-glass-border/50 gap-2 text-sm font-mono">
+                <Wallet className="h-4 w-4" />
+                <span>{shortAddress}</span>
+              </Button>
+              <Button variant="ghost" size="icon" onClick={disconnect} className="text-muted-foreground hover:text-foreground">
+                <LogOut className="h-4 w-4" />
+              </Button>
+            </>
+          ) : !isLanding ? (
+            <Button asChild className="gradient-neon text-primary-foreground gap-2">
+              <Link to="/auth"><Wallet className="h-4 w-4" /> Connect</Link>
+            </Button>
+          ) : null}
         </div>
 
-        {/* Mobile menu toggle */}
-        <button
-          className="md:hidden p-2 text-muted-foreground"
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
+        {/* Mobile toggle */}
+        <button className="md:hidden p-2 text-muted-foreground" onClick={() => setMobileOpen(!mobileOpen)}>
           {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
-      {/* Mobile Nav */}
       {mobileOpen && (
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           className="md:hidden glass border-t border-glass-border/30 p-4 space-y-2"
         >
-          {navLinks.map((link) => (
+          {isConnected && navLinks.map((link) => (
             <Link
               key={link.path}
               to={link.path}
@@ -97,10 +109,18 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
-          <Button variant="outline" className="w-full glass border-glass-border/50 gap-2 text-sm font-mono mt-2">
-            <Wallet className="h-4 w-4" />
-            <span>0x1a2B...9cDe</span>
-          </Button>
+          {isConnected ? (
+            <div className="flex gap-2 mt-2">
+              <Button variant="outline" className="flex-1 glass border-glass-border/50 gap-2 text-sm font-mono">
+                <Wallet className="h-4 w-4" />{shortAddress}
+              </Button>
+              <Button variant="ghost" size="icon" onClick={disconnect}><LogOut className="h-4 w-4" /></Button>
+            </div>
+          ) : (
+            <Button asChild className="w-full gradient-neon text-primary-foreground gap-2 mt-2">
+              <Link to="/auth" onClick={() => setMobileOpen(false)}><Wallet className="h-4 w-4" /> Connect Wallet</Link>
+            </Button>
+          )}
         </motion.div>
       )}
     </nav>

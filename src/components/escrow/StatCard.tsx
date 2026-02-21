@@ -5,13 +5,14 @@ interface StatCardProps {
   label: string;
   value: string;
   icon: LucideIcon;
-  accent?: 'violet' | 'cyan' | 'success';
+  accent?: 'violet' | 'cyan' | 'success' | 'neon';
 }
 
 const accentMap = {
   violet: 'from-violet to-violet-glow',
   cyan: 'from-cyan to-cyan-glow',
   success: 'from-success to-success',
+  neon: 'from-neon to-neon-glow',
 };
 
 export function StatCard({ label, value, icon: Icon, accent = 'violet' }: StatCardProps) {
