@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
-  { label: 'Dashboard', path: '/' },
+  { label: 'Dashboard', path: '/dashboard' },
   { label: 'Create Escrow', path: '/create' },
   { label: 'Profile', path: '/profile' },
 ];
@@ -14,13 +14,19 @@ const navLinks = [
 export function Navbar() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const isLanding = location.pathname === '/';
 
   return (
-    <nav className="sticky top-0 z-50 glass border-b border-glass-border/30">
+    <nav className={cn(
+      "sticky top-0 z-50 border-b",
+      isLanding
+        ? "bg-background/60 backdrop-blur-xl border-border/30"
+        : "glass border-glass-border/30"
+    )}>
       <div className="container flex h-16 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg gradient-violet-cyan">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg gradient-neon">
             <Shield className="h-4 w-4 text-primary-foreground" />
           </div>
           <span className="text-lg font-bold text-gradient">ChainHire</span>
@@ -54,7 +60,7 @@ export function Navbar() {
 
         {/* Wallet Button */}
         <div className="hidden md:flex items-center gap-3">
-          <Button variant="outline" className="glass border-glass-border/50 gap-2 text-sm">
+          <Button variant="outline" className="glass border-glass-border/50 gap-2 text-sm font-mono">
             <Wallet className="h-4 w-4" />
             <span>0x1a2B...9cDe</span>
           </Button>
@@ -91,7 +97,7 @@ export function Navbar() {
               {link.label}
             </Link>
           ))}
-          <Button variant="outline" className="w-full glass border-glass-border/50 gap-2 text-sm mt-2">
+          <Button variant="outline" className="w-full glass border-glass-border/50 gap-2 text-sm font-mono mt-2">
             <Wallet className="h-4 w-4" />
             <span>0x1a2B...9cDe</span>
           </Button>
