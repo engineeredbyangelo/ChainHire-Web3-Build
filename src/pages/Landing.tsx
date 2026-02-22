@@ -96,10 +96,42 @@ const features = [
 ];
 
 const audiences = [
-  { icon: Users, label: 'DAO Contributors', desc: 'Get paid reliably for governance and dev work.' },
-  { icon: Zap, label: 'Web3 Developers', desc: 'Secure milestone-based contracts for dApp builds.' },
-  { icon: TrendingUp, label: 'NFT Artists & Creators', desc: 'Protect your creative work with escrowed payments.' },
-  { icon: Globe, label: 'Crypto-Native Founders', desc: 'Hire contractors globally with trustless guarantees.' },
+  {
+    icon: Users,
+    label: 'DAO Contributors',
+    desc: 'Get paid reliably for governance proposals, treasury management, and protocol development work.',
+    tag: 'GOVERNANCE',
+    visual: '⚖️',
+    code: 'dao.propose({ action: "fund", amount: 5000 });',
+    accent: 'neon' as const,
+  },
+  {
+    icon: Zap,
+    label: 'Web3 Developers',
+    desc: 'Secure milestone-based contracts for smart contract audits, dApp front-ends, and protocol integrations.',
+    tag: 'DEPLOY',
+    visual: '⛓️',
+    code: 'contract.deploy({ network: "polygon" });',
+    accent: 'violet' as const,
+  },
+  {
+    icon: TrendingUp,
+    label: 'NFT Artists & Creators',
+    desc: 'Protect your creative work with escrowed commissions — from PFP collections to generative art.',
+    tag: 'MINT',
+    visual: '🎨',
+    code: 'nft.mint({ collection: "genesis", royalty: 7.5 });',
+    accent: 'cyan' as const,
+  },
+  {
+    icon: Globe,
+    label: 'Crypto-Native Founders',
+    desc: 'Hire contractors globally with trustless guarantees. No borders, no banks, no middlemen.',
+    tag: 'SCALE',
+    visual: '🚀',
+    code: 'escrow.create({ global: true, kyc: false });',
+    accent: 'neon' as const,
+  },
 ];
 
 const benefits = [
@@ -136,7 +168,9 @@ export default function Landing() {
               <Button asChild size="lg" className="gradient-neon text-primary-foreground font-semibold text-base glow-neon gap-2 px-8">
                 <Link to="/auth">Launch App <ArrowRight className="h-4 w-4" /></Link>
               </Button>
-              <Button variant="outline" size="lg" className="glass border-glass-border/50 text-base gap-2 px-8">Read the Docs</Button>
+              <Button variant="outline" size="lg" className="glass border-glass-border/50 text-base gap-2 px-8" asChild>
+                <Link to="/docs">Read the Docs</Link>
+              </Button>
             </motion.div>
             <motion.p variants={fadeUp} custom={4} className="text-xs text-muted-foreground pt-2 font-mono">
               No KYC · No platform fees · Only 2.5% on arbitration
@@ -168,16 +202,71 @@ export default function Landing() {
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">Built for <span className="text-gradient">Crypto-Native</span> Teams</h2>
             <p className="text-muted-foreground max-w-lg mx-auto">Stop closing deals over Discord DMs. ChainHire gives you the payment rails web3 deserves.</p>
           </motion.div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {audiences.map((a, i) => (
-              <motion.div key={a.label} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="glass rounded-xl p-6 text-center group">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-neon/10 border border-neon/20 mx-auto mb-4 group-hover:glow-neon transition-shadow">
-                  <a.icon className="h-6 w-6 text-neon" />
-                </div>
-                <h3 className="font-semibold text-foreground mb-2">{a.label}</h3>
-                <p className="text-sm text-muted-foreground">{a.desc}</p>
-              </motion.div>
-            ))}
+
+          {/* Staggered Bento Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {audiences.map((a, i) => {
+              const accentColor = a.accent === 'neon' ? 'neon' : a.accent === 'violet' ? 'violet' : 'cyan';
+              const isLarge = i === 0 || i === 3;
+              return (
+                <motion.div
+                  key={a.label}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.12, duration: 0.6 }}
+                  className={`glass rounded-2xl overflow-hidden group relative ${isLarge ? 'md:row-span-1' : ''}`}
+                >
+                  {/* Top accent line */}
+                  <div className={`h-0.5 w-full bg-gradient-to-r ${
+                    accentColor === 'neon' ? 'from-neon/60 to-cyan/30' :
+                    accentColor === 'violet' ? 'from-violet/60 to-neon/30' :
+                    'from-cyan/60 to-violet/30'
+                  }`} />
+
+                  <div className="p-6 sm:p-8 flex flex-col h-full">
+                    {/* Header row */}
+                    <div className="flex items-start justify-between mb-5">
+                      <div className="flex items-center gap-3">
+                        <div className={`flex h-11 w-11 items-center justify-center rounded-xl border transition-shadow ${
+                          accentColor === 'neon' ? 'bg-neon/10 border-neon/20 group-hover:glow-neon' :
+                          accentColor === 'violet' ? 'bg-violet/10 border-violet/20 group-hover:glow-violet' :
+                          'bg-cyan/10 border-cyan/20 group-hover:glow-cyan'
+                        }`}>
+                          <a.icon className={`h-5 w-5 ${
+                            accentColor === 'neon' ? 'text-neon' :
+                            accentColor === 'violet' ? 'text-violet' :
+                            'text-cyan'
+                          }`} />
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-lg text-foreground">{a.label}</h3>
+                          <span className={`text-[10px] font-mono font-semibold uppercase tracking-widest ${
+                            accentColor === 'neon' ? 'text-neon/60' :
+                            accentColor === 'violet' ? 'text-violet/60' :
+                            'text-cyan/60'
+                          }`}>{a.tag}</span>
+                        </div>
+                      </div>
+                      <span className="text-4xl opacity-80 group-hover:scale-110 transition-transform">{a.visual}</span>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-5 flex-1">{a.desc}</p>
+
+                    {/* Code snippet */}
+                    <div className="rounded-lg bg-secondary/40 border border-border px-4 py-3 font-mono text-xs text-foreground/60 flex items-center gap-2">
+                      <span className={`h-1.5 w-1.5 rounded-full shrink-0 ${
+                        accentColor === 'neon' ? 'bg-neon' :
+                        accentColor === 'violet' ? 'bg-violet' :
+                        'bg-cyan'
+                      } animate-pulse`} />
+                      <code className="truncate">{a.code}</code>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
