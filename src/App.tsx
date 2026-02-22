@@ -11,6 +11,7 @@ import Auth from "./pages/Auth";
 import CreateEscrow from "./pages/CreateEscrow";
 import EscrowDetail from "./pages/EscrowDetail";
 import Profile from "./pages/Profile";
+import Docs from "./pages/Docs";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const AppRoutes = () => (
   <AppShell>
     <Routes>
       <Route path="/" element={<Landing />} />
+      <Route path="/docs" element={<Docs />} />
       <Route path="/auth" element={<Auth />} />
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
       <Route path="/create" element={<ProtectedRoute><CreateEscrow /></ProtectedRoute>} />
