@@ -158,7 +158,7 @@ export default function Landing() {
                 Built on Polygon
               </span>
             </motion.div>
-            <motion.h1 variants={fadeUp} custom={1} className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
+            <motion.h1 variants={fadeUp} custom={1} className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] font-display">
               The trust layer for<br /><span className="text-neon animate-pulse-glow inline-block">Web3 talent</span>
             </motion.h1>
             <motion.p variants={fadeUp} custom={2} className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto">
@@ -183,7 +183,7 @@ export default function Landing() {
       <section className="py-24 relative">
         <div className="container">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">How <span className="text-gradient">ChainHire</span> Works</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 font-display">How <span className="text-gradient">ChainHire</span> Works</h2>
             <p className="text-muted-foreground max-w-lg mx-auto">A complete escrow protocol designed for the way web3 teams actually work.</p>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -199,7 +199,7 @@ export default function Landing() {
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
         <div className="container relative">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Built for <span className="text-gradient">Crypto-Native</span> Teams</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 font-display">Built for <span className="text-gradient">Crypto-Native</span> Teams</h2>
             <p className="text-muted-foreground max-w-lg mx-auto">Stop closing deals over Discord DMs. ChainHire gives you the payment rails web3 deserves.</p>
           </motion.div>
 
@@ -276,7 +276,7 @@ export default function Landing() {
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <h2 className="text-3xl sm:text-4xl font-bold mb-6">Why Teams Choose <span className="text-gradient">ChainHire</span></h2>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-6 font-display">Why Teams Choose <span className="text-gradient">ChainHire</span></h2>
               <div className="space-y-4">
                 {benefits.map((b, i) => (
                   <motion.div key={i} initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} className="flex items-start gap-3">
@@ -310,7 +310,7 @@ export default function Landing() {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background" />
         <div className="container relative text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-2xl mx-auto space-y-6">
-            <h2 className="text-4xl sm:text-5xl font-bold">Ready to Work <span className="text-gradient">Trustlessly</span>?</h2>
+            <h2 className="text-4xl sm:text-5xl font-bold font-display">Ready to Work <span className="text-gradient">Trustlessly</span>?</h2>
             <p className="text-muted-foreground text-lg">Connect your wallet and create your first escrow in under 2 minutes.</p>
             <Button asChild size="lg" className="gradient-neon text-primary-foreground font-semibold text-base glow-neon gap-2 px-10">
               <Link to="/auth">Launch App <ArrowRight className="h-4 w-4" /></Link>
