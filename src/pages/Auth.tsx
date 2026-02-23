@@ -1,22 +1,18 @@
 import { motion } from 'framer-motion';
-import { Shield, Wallet, Hexagon } from 'lucide-react';
+import { Shield, Hexagon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useWallet } from '@/contexts/WalletContext';
+import { useAuth } from '@/contexts/CivicAuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { UserButton } from '@civic/auth-web3/react';
 
 export default function Auth() {
-  const { isConnected, connect } = useWallet();
+  const { isConnected, signIn, isLoading } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isConnected) navigate('/dashboard', { replace: true });
   }, [isConnected, navigate]);
-
-  const handleConnect = () => {
-    connect();
-    navigate('/dashboard');
-  };
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center relative grid-bg">
@@ -48,25 +44,20 @@ export default function Auth() {
             </div>
             <h1 className="text-2xl font-bold text-gradient">ChainHire</h1>
             <p className="text-muted-foreground text-sm max-w-xs">
-              Connect your wallet to access ChainHire. No email or password needed.
+              Sign in with Civic Auth to access ChainHire. Secure, passwordless authentication.
             </p>
           </div>
 
-          {/* Connect button */}
-          <Button
-            onClick={handleConnect}
-            size="lg"
-            className="w-full gradient-neon text-primary-foreground font-semibold text-base glow-neon gap-3 h-14"
-          >
-            <Wallet className="h-5 w-5" />
-            Connect Wallet
-          </Button>
+          {/* Civic Sign-In Button */}
+          <div className="flex justify-center">
+            <UserButton />
+          </div>
 
-          {/* Supported wallets */}
+          {/* Supported methods */}
           <div className="space-y-3">
-            <p className="text-xs text-muted-foreground font-mono uppercase tracking-wider">Supported Wallets</p>
+            <p className="text-xs text-muted-foreground font-mono uppercase tracking-wider">Powered by Civic Auth</p>
             <div className="flex justify-center gap-4">
-              {['MetaMask', 'WalletConnect', 'Coinbase'].map((name) => (
+              {['Email', 'Google', 'Wallet'].map((name) => (
                 <div key={name} className="flex flex-col items-center gap-1.5">
                   <div className="h-10 w-10 rounded-lg glass border-glass-border/50 flex items-center justify-center">
                     <Hexagon className="h-5 w-5 text-muted-foreground" />
@@ -77,10 +68,10 @@ export default function Auth() {
             </div>
           </div>
 
-          {/* Polygon badge */}
+          {/* Badge */}
           <div className="flex items-center justify-center gap-2 text-xs font-mono text-muted-foreground">
             <span className="h-1.5 w-1.5 rounded-full bg-violet animate-pulse-glow" />
-            Polygon Network
+            Civic Auth · Web3 Enabled
           </div>
         </div>
       </motion.div>

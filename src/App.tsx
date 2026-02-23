@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AppShell } from "@/components/layout/AppShell";
-import { WalletProvider, useWallet } from "@/contexts/WalletContext";
+import { CivicAuthWrapper, useAuth } from "@/contexts/CivicAuthContext";
 import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
 import Auth from "./pages/Auth";
@@ -17,7 +17,8 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isConnected } = useWallet();
+  const { isConnected, isLoading } = useAuth();
+  if (isLoading) return null;
   if (!isConnected) return <Navigate to="/auth" replace />;
   return <>{children}</>;
 }
@@ -43,9 +44,9 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <WalletProvider>
+        <CivicAuthWrapper>
           <AppRoutes />
-        </WalletProvider>
+        </CivicAuthWrapper>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
