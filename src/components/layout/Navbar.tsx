@@ -4,7 +4,8 @@ import { Shield, Wallet, Menu, X, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { useWallet } from '@/contexts/WalletContext';
+import { useAuth } from '@/contexts/CivicAuthContext';
+import { UserButton } from '@civic/auth-web3/react';
 
 const navLinks = [
   { label: 'Dashboard', path: '/dashboard' },
@@ -16,9 +17,9 @@ export function Navbar() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const isLanding = location.pathname === '/';
-  const { isConnected, address, disconnect } = useWallet();
+  const { isConnected, user, signOut } = useAuth();
 
-  const shortAddress = address ? `${address.slice(0, 6)}...${address.slice(-4)}` : '';
+  const displayId = user?.name || user?.email || (user?.id ? `${user.id.slice(0, 6)}...${user.id.slice(-4)}` : '');
 
   return (
     <nav className={cn(
@@ -63,15 +64,12 @@ export function Navbar() {
           </div>
         )}
 
-        {/* Wallet */}
+        {/* Auth */}
         <div className="hidden md:flex items-center gap-3">
           {isConnected ? (
             <>
-              <Button variant="outline" className="glass border-glass-border/50 gap-2 text-sm font-mono">
-                <Wallet className="h-4 w-4" />
-                <span>{shortAddress}</span>
-              </Button>
-              <Button variant="ghost" size="icon" onClick={disconnect} className="text-muted-foreground hover:text-foreground">
+              <UserButton />
+              <Button variant="ghost" size="icon" onClick={signOut} className="text-muted-foreground hover:text-foreground">
                 <LogOut className="h-4 w-4" />
               </Button>
             </>
@@ -111,14 +109,14 @@ export function Navbar() {
           ))}
           {isConnected ? (
             <div className="flex gap-2 mt-2">
-              <Button variant="outline" className="flex-1 glass border-glass-border/50 gap-2 text-sm font-mono">
-                <Wallet className="h-4 w-4" />{shortAddress}
-              </Button>
-              <Button variant="ghost" size="icon" onClick={disconnect}><LogOut className="h-4 w-4" /></Button>
+              <div className="flex-1">
+                <UserButton />
+              </div>
+              <Button variant="ghost" size="icon" onClick={signOut}><LogOut className="h-4 w-4" /></Button>
             </div>
           ) : (
             <Button asChild className="w-full gradient-neon text-primary-foreground gap-2 mt-2">
-              <Link to="/auth" onClick={() => setMobileOpen(false)}><Wallet className="h-4 w-4" /> Connect Wallet</Link>
+              <Link to="/auth" onClick={() => setMobileOpen(false)}><Wallet className="h-4 w-4" /> Connect</Link>
             </Button>
           )}
         </motion.div>
