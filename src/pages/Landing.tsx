@@ -159,10 +159,10 @@ export default function Landing() {
               </span>
             </motion.div>
             <motion.h1 variants={fadeUp} custom={1} className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1]">
-              Trustless Payments<br /><span className="text-gradient">for Web3 Work</span>
+              The trust layer for<br /><span className="text-neon animate-pulse-glow inline-block">Web3 talent</span>
             </motion.h1>
             <motion.p variants={fadeUp} custom={2} className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto">
-              Non-custodial USDC escrow with milestone-based releases, auto-release timers, and on-chain reputation — purpose-built for crypto-native freelancers and clients.
+              Non-custodial USDC payments designed for the frontier of work. Deploy milestone-based contracts, set auto-release deadlocks, and stack your on-chain reputation. No middlemen, no payment delays, just pure Web3 commerce.
             </motion.p>
             <motion.div variants={fadeUp} custom={3} className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Button asChild size="lg" className="gradient-neon text-primary-foreground font-semibold text-base glow-neon gap-2 px-8">
