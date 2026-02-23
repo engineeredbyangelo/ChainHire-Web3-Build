@@ -83,7 +83,7 @@ export default function CreateEscrow() {
           {step === 0 && (
             <>
               <div>
-                <h2 className="text-xl font-bold text-foreground mb-1">Freelancer Wallet</h2>
+                <h2 className="text-xl font-bold text-foreground mb-1 font-display">Freelancer Wallet</h2>
                 <p className="text-sm text-muted-foreground">Enter the wallet address of the freelancer you're hiring.</p>
               </div>
               <div className="space-y-2">
@@ -103,7 +103,7 @@ export default function CreateEscrow() {
             <>
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-xl font-bold text-foreground mb-1">Milestones</h2>
+                  <h2 className="text-xl font-bold text-foreground mb-1 font-display">Milestones</h2>
                   <p className="text-sm text-muted-foreground">Define the work phases and payment amounts.</p>
                 </div>
                 <div className="text-right">
@@ -155,7 +155,7 @@ export default function CreateEscrow() {
           {step === 2 && (
             <>
               <div>
-                <h2 className="text-xl font-bold text-foreground mb-1">Auto-Release Window</h2>
+                <h2 className="text-xl font-bold text-foreground mb-1 font-display">Auto-Release Window</h2>
                 <p className="text-sm text-muted-foreground">
                   If the client doesn't respond after a milestone is marked complete, funds auto-release after this period.
                 </p>
@@ -181,7 +181,7 @@ export default function CreateEscrow() {
           {step === 3 && (
             <>
               <div>
-                <h2 className="text-xl font-bold text-foreground mb-1">Review & Deploy</h2>
+                <h2 className="text-xl font-bold text-foreground mb-1 font-display">Review & Deploy</h2>
                 <p className="text-sm text-muted-foreground">Confirm the details before deploying your escrow contract.</p>
               </div>
               <div className="space-y-4">

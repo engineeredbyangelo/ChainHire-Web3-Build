@@ -21,7 +21,7 @@ const Dashboard = () => {
         className="flex flex-col sm:flex-row sm:items-end justify-between gap-4"
       >
         <div>
-          <h1 className="text-3xl font-bold text-foreground">
+          <h1 className="text-3xl font-bold text-foreground font-display">
             Welcome back, <span className="text-gradient">{mockUser.displayName}</span>
           </h1>
           <p className="text-muted-foreground mt-1">Here's your escrow overview</p>
@@ -51,7 +51,7 @@ const Dashboard = () => {
 
       {/* Escrow List */}
       <div>
-        <h2 className="text-lg font-semibold text-foreground mb-4">Your Escrows</h2>
+        <h2 className="text-lg font-semibold text-foreground mb-4 font-display">Your Escrows</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {mockEscrows.map((escrow) => {
             const role = escrow.clientWallet === mockUser.wallet ? 'client' : 'freelancer';

@@ -211,7 +211,7 @@ export default function Profile() {
         {/* Escrow History */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-foreground">Escrow History</h2>
+            <h2 className="text-lg font-semibold text-foreground font-display">Escrow History</h2>
             <div className="flex gap-1">
               {(['all', 'active', 'completed', 'disputed'] as Filter[]).map((f) => (
                 <button
