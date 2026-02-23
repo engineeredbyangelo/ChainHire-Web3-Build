@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { 
   Shield, ArrowLeft, BookOpen, Wallet, Milestone, Timer, Scale, Star, 
-  Globe, FileCode2, Layers, AlertTriangle, CheckCircle2, ArrowRight 
+  Globe, FileCode2, Layers, AlertTriangle, CheckCircle2, ArrowRight, Menu, X 
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -161,6 +162,8 @@ const sections: DocSection[] = [
 const toc = sections.map(s => ({ id: s.id, title: s.title }));
 
 export default function Docs() {
+  const [mobileTocOpen, setMobileTocOpen] = useState(false);
+
   return (
     <div className="relative min-h-screen">
       {/* Header */}
@@ -175,7 +178,7 @@ export default function Docs() {
               <div className="flex h-10 w-10 items-center justify-center rounded-lg gradient-neon">
                 <BookOpen className="h-5 w-5 text-primary-foreground" />
               </div>
-              <h1 className="text-3xl sm:text-4xl font-bold">Documentation</h1>
+              <h1 className="text-3xl sm:text-4xl font-bold font-display">Documentation</h1>
             </motion.div>
             <motion.p variants={fadeUp} custom={1} className="text-muted-foreground text-lg">
               Everything you need to know about creating, managing, and settling escrow contracts on ChainHire.
@@ -184,9 +187,42 @@ export default function Docs() {
         </div>
       </section>
 
+      {/* Mobile TOC toggle */}
+      <div className="lg:hidden sticky top-16 z-40 border-b border-border bg-background/90 backdrop-blur-lg">
+        <button
+          onClick={() => setMobileTocOpen(!mobileTocOpen)}
+          className="container flex items-center justify-between w-full py-3 text-sm font-medium text-foreground"
+        >
+          <span className="flex items-center gap-2">
+            <BookOpen className="h-4 w-4 text-neon" />
+            On this page
+          </span>
+          {mobileTocOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+        </button>
+        {mobileTocOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="container pb-3 space-y-1"
+          >
+            {toc.map(t => (
+              <a
+                key={t.id}
+                href={`#${t.id}`}
+                onClick={() => setMobileTocOpen(false)}
+                className="block text-sm text-muted-foreground hover:text-foreground py-1.5 px-3 rounded-md hover:bg-secondary/50 transition-colors"
+              >
+                {t.title}
+              </a>
+            ))}
+          </motion.div>
+        )}
+      </div>
+
       <div className="container py-12">
         <div className="grid lg:grid-cols-[240px_1fr] gap-12">
-          {/* Sidebar TOC */}
+          {/* Sidebar TOC — desktop only */}
           <aside className="hidden lg:block">
             <div className="sticky top-24 space-y-1">
               <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-3">On this page</p>
@@ -203,7 +239,7 @@ export default function Docs() {
           </aside>
 
           {/* Content */}
-          <div className="space-y-16 max-w-3xl">
+          <div className="space-y-16 min-w-0">
             {sections.map((section, idx) => (
               <motion.section
                 key={section.id}
@@ -215,14 +251,14 @@ export default function Docs() {
                 className="scroll-mt-24"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neon/10 border border-neon/20">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neon/10 border border-neon/20 shrink-0">
                     <section.icon className="h-4 w-4 text-neon" />
                   </div>
-                  <h2 className="text-xl sm:text-2xl font-bold">{section.title}</h2>
+                  <h2 className="text-xl sm:text-2xl font-bold font-display">{section.title}</h2>
                 </div>
                 <div className="space-y-3 text-muted-foreground leading-relaxed">
                   {section.content.map((para, i) => (
-                    <p key={i}>{para}</p>
+                    <p key={i} className="break-words">{para}</p>
                   ))}
                 </div>
                 {section.code && (
@@ -231,14 +267,16 @@ export default function Docs() {
                       <span className="h-2 w-2 rounded-full bg-neon/60" />
                       <span className="text-xs font-mono text-muted-foreground">Solidity</span>
                     </div>
-                    <pre className="p-4 text-sm font-mono overflow-x-auto">
-                      {section.code.map((line, i) => (
-                        <div key={i} className="flex">
-                          <span className="w-8 text-right pr-4 text-muted-foreground/40 select-none">{i + 1}</span>
-                          <span className="text-foreground/80">{line}</span>
-                        </div>
-                      ))}
-                    </pre>
+                    <div className="overflow-x-auto">
+                      <pre className="p-4 text-xs sm:text-sm font-mono min-w-0">
+                        {section.code.map((line, i) => (
+                          <div key={i} className="flex">
+                            <span className="w-6 sm:w-8 text-right pr-3 sm:pr-4 text-muted-foreground/40 select-none shrink-0">{i + 1}</span>
+                            <span className="text-foreground/80 whitespace-pre">{line}</span>
+                          </div>
+                        ))}
+                      </pre>
+                    </div>
                   </div>
                 )}
               </motion.section>
@@ -251,7 +289,7 @@ export default function Docs() {
               viewport={{ once: true }}
               className="gradient-border rounded-xl p-8 text-center space-y-4"
             >
-              <h3 className="text-xl font-bold">Ready to get started?</h3>
+              <h3 className="text-xl font-bold font-display">Ready to get started?</h3>
               <p className="text-muted-foreground text-sm">Connect your wallet and create your first escrow contract.</p>
               <Button asChild className="gradient-neon text-primary-foreground font-semibold gap-2 glow-neon">
                 <Link to="/auth">Launch App <ArrowRight className="h-4 w-4" /></Link>
