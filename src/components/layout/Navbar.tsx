@@ -4,8 +4,7 @@ import { Shield, Wallet, Menu, X, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { useAuth } from '@/contexts/CivicAuthContext';
-import { UserButton } from '@civic/auth-web3/react';
+import { useAuth } from '@/contexts/AuthContext';
 
 const navLinks = [
   { label: 'Dashboard', path: '/dashboard' },
@@ -74,7 +73,9 @@ export function Navbar() {
                   <span>{displayAddress}</span>
                 </Button>
               )}
-              <UserButton />
+              <span className="text-xs text-muted-foreground truncate max-w-[120px]">
+                {user?.email}
+              </span>
               <Button variant="ghost" size="icon" onClick={signOut} className="text-muted-foreground hover:text-foreground">
                 <LogOut className="h-4 w-4" />
               </Button>
@@ -114,10 +115,8 @@ export function Navbar() {
             </Link>
           ))}
           {isConnected ? (
-            <div className="flex gap-2 mt-2">
-              <div className="flex-1">
-                <UserButton />
-              </div>
+            <div className="flex items-center gap-2 mt-2">
+              <span className="text-xs text-muted-foreground truncate flex-1">{user?.email}</span>
               <Button variant="ghost" size="icon" onClick={signOut}><LogOut className="h-4 w-4" /></Button>
             </div>
           ) : (
