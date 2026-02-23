@@ -53,7 +53,7 @@ function getWalletIcon(connector: { id: string; name: string }) {
 }
 
 export default function Auth() {
-  const { isConnected, hasWallet, createWallet, walletCreationInProgress } = useAuth();
+  const { isConnected, hasWallet, createWallet, walletCreationInProgress, signIn } = useAuth();
   const navigate = useNavigate();
   const { connectors, connect, isPending } = useConnect();
   const { isConnected: isWagmiConnected } = useAccount();
@@ -119,8 +119,18 @@ export default function Auth() {
             </div>
           ) : (
             <div className="space-y-5">
-              {/* Civic Auth */}
+              {/* Civic Auth — custom styled button */}
               <div className="flex justify-center">
+                <motion.button
+                  whileTap={{ scale: 0.97 }}
+                  onClick={signIn}
+                  className="w-full h-12 rounded-lg bg-background border border-neon/40 text-neon font-medium text-sm tracking-wide transition-all hover:shadow-[0_0_20px_hsl(160_100%_50%/0.25)] hover:border-neon/70 active:shadow-[0_0_30px_hsl(160_100%_50%/0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon/50"
+                >
+                  Log in
+                </motion.button>
+              </div>
+              {/* Hidden Civic UserButton — keeps SDK mounted */}
+              <div className="sr-only" aria-hidden="true">
                 <UserButton />
               </div>
 
