@@ -17,9 +17,9 @@ export function Navbar() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const isLanding = location.pathname === '/';
-  const { isConnected, user, signOut } = useAuth();
+  const { isConnected, user, walletAddress, signOut } = useAuth();
 
-  const displayId = user?.name || user?.email || (user?.id ? `${user.id.slice(0, 6)}...${user.id.slice(-4)}` : '');
+  const displayAddress = walletAddress ? `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}` : '';
 
   return (
     <nav className={cn(
@@ -68,6 +68,12 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-3">
           {isConnected ? (
             <>
+              {displayAddress && (
+                <Button variant="outline" className="glass border-glass-border/50 gap-2 text-sm font-mono">
+                  <Wallet className="h-4 w-4" />
+                  <span>{displayAddress}</span>
+                </Button>
+              )}
               <UserButton />
               <Button variant="ghost" size="icon" onClick={signOut} className="text-muted-foreground hover:text-foreground">
                 <LogOut className="h-4 w-4" />
