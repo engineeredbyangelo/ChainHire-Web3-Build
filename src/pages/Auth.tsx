@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Shield, Hexagon } from 'lucide-react';
+import { Shield, Hexagon, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/CivicAuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -7,12 +7,19 @@ import { useEffect } from 'react';
 import { UserButton } from '@civic/auth-web3/react';
 
 export default function Auth() {
-  const { isConnected, signIn, isLoading } = useAuth();
+  const { isConnected, hasWallet, createWallet, walletCreationInProgress, isLoading } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isConnected) navigate('/dashboard', { replace: true });
-  }, [isConnected, navigate]);
+    if (isConnected && hasWallet) navigate('/dashboard', { replace: true });
+  }, [isConnected, hasWallet, navigate]);
+
+  // Auto-create wallet for newly signed-in users
+  useEffect(() => {
+    if (isConnected && !hasWallet && createWallet && !walletCreationInProgress) {
+      createWallet();
+    }
+  }, [isConnected, hasWallet, createWallet, walletCreationInProgress]);
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center relative grid-bg">
@@ -44,14 +51,23 @@ export default function Auth() {
             </div>
             <h1 className="text-2xl font-bold text-gradient">ChainHire</h1>
             <p className="text-muted-foreground text-sm max-w-xs">
-              Sign in with Civic Auth to access ChainHire. Secure, passwordless authentication.
+              {walletCreationInProgress
+                ? 'Creating your embedded wallet on Polygon...'
+                : 'Sign in with Civic Auth to access ChainHire. Secure, passwordless authentication with an embedded Web3 wallet.'}
             </p>
           </div>
 
-          {/* Civic Sign-In Button */}
-          <div className="flex justify-center">
-            <UserButton />
-          </div>
+          {/* Wallet creation spinner or sign-in */}
+          {walletCreationInProgress ? (
+            <div className="flex flex-col items-center gap-3">
+              <Loader2 className="h-8 w-8 animate-spin text-neon" />
+              <p className="text-sm text-muted-foreground">Setting up your wallet...</p>
+            </div>
+          ) : (
+            <div className="flex justify-center">
+              <UserButton />
+            </div>
+          )}
 
           {/* Supported methods */}
           <div className="space-y-3">
@@ -71,7 +87,7 @@ export default function Auth() {
           {/* Badge */}
           <div className="flex items-center justify-center gap-2 text-xs font-mono text-muted-foreground">
             <span className="h-1.5 w-1.5 rounded-full bg-violet animate-pulse-glow" />
-            Civic Auth · Web3 Enabled
+            Polygon Network · Civic Auth
           </div>
         </div>
       </motion.div>
