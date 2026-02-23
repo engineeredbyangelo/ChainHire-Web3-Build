@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Shield, Users, Zap, TrendingUp, Globe, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { HeroScene } from '@/components/landing/HeroScene';
-import { FeatureContractCard } from '@/components/landing/FeatureContractCard';
+import { FeatureWireframeCard } from '@/components/landing/FeatureWireframeCard';
+import type { ShapeType } from '@/components/landing/WireframeShape';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -14,11 +15,12 @@ const fadeUp = {
   }),
 };
 
-const features = [
+const features: Array<{ title: string; desc: string; contractAddress: string; code: string[]; shape: ShapeType }> = [
   {
     title: 'Non-Custodial Escrow',
     desc: 'Funds are held in audited smart contracts on Polygon. No intermediary ever touches your USDC.',
     contractAddress: '0x7F2c...E9a1',
+    shape: 'dodecahedron',
     code: [
       '// Non-Custodial Escrow',
       'contract ChainEscrow {',
@@ -32,6 +34,7 @@ const features = [
     title: 'Sequential Milestones',
     desc: 'Break work into milestones. Funds release only when each phase is approved.',
     contractAddress: '0xA3d8...B4c2',
+    shape: 'torusKnot',
     code: [
       '// Milestone Progression',
       'function completeMilestone(',
@@ -45,6 +48,7 @@ const features = [
     title: 'Auto-Release Timer',
     desc: 'Built-in 7-day countdown protects freelancers. No response? Funds auto-release.',
     contractAddress: '0xC5e1...D7f3',
+    shape: 'torus',
     code: [
       '// Auto Release Logic',
       'function autoRelease(',
@@ -58,6 +62,7 @@ const features = [
     title: 'Fair Arbitration',
     desc: 'Disputes resolved by neutral arbitrators for a flat 2.5% fee. Evidence-based outcomes.',
     contractAddress: '0xE9b4...F2a6',
+    shape: 'octahedron',
     code: [
       '// Dispute Resolution',
       'function resolveDispute(',
@@ -70,6 +75,7 @@ const features = [
     title: 'On-Chain Reputation',
     desc: 'Every completed escrow builds your verifiable reputation. Bronze → Diamond.',
     contractAddress: '0x1B3c...8D5e',
+    shape: 'icosahedron',
     code: [
       '// Reputation Scoring',
       'event ReputationUpdated(',
@@ -82,6 +88,7 @@ const features = [
     title: 'Global & Permissionless',
     desc: 'No KYC, no borders, no bank accounts. Connect your wallet and start working.',
     contractAddress: '0x4F7a...2E9c',
+    shape: 'sphere',
     code: [
       '// Permissionless Access',
       'modifier onlyParticipant() {',
@@ -188,7 +195,7 @@ export default function Landing() {
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((f) => (
-              <FeatureContractCard key={f.title} {...f} />
+              <FeatureWireframeCard key={f.title} {...f} />
             ))}
           </div>
         </div>
