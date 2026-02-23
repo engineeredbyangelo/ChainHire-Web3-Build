@@ -1,18 +1,26 @@
 import { motion } from 'framer-motion';
-import { Shield, Hexagon, Loader2 } from 'lucide-react';
+import { Shield, Hexagon, Loader2, Wallet } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/CivicAuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { UserButton } from '@civic/auth-web3/react';
+import { useConnect, useAccount } from 'wagmi';
 
 export default function Auth() {
-  const { isConnected, hasWallet, createWallet, walletCreationInProgress, isLoading } = useAuth();
+  const { isConnected, hasWallet, createWallet, walletCreationInProgress } = useAuth();
   const navigate = useNavigate();
+  const { connectors, connect, isPending } = useConnect();
+  const { isConnected: isWagmiConnected } = useAccount();
 
   useEffect(() => {
     if (isConnected && hasWallet) navigate('/dashboard', { replace: true });
   }, [isConnected, hasWallet, navigate]);
+
+  // Also redirect if connected via external wallet
+  useEffect(() => {
+    if (isWagmiConnected && isConnected) navigate('/dashboard', { replace: true });
+  }, [isWagmiConnected, isConnected, navigate]);
 
   // Auto-create wallet for newly signed-in users
   useEffect(() => {
@@ -20,6 +28,11 @@ export default function Auth() {
       createWallet();
     }
   }, [isConnected, hasWallet, createWallet, walletCreationInProgress]);
+
+  // Filter to only external wallet connectors (exclude civic embedded)
+  const externalConnectors = connectors.filter(
+    (c) => c.id !== 'civic-embedded' && c.type !== 'civic'
+  );
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center relative grid-bg">
@@ -53,7 +66,7 @@ export default function Auth() {
             <p className="text-muted-foreground text-sm max-w-xs">
               {walletCreationInProgress
                 ? 'Creating your embedded wallet on Polygon...'
-                : 'Sign in with Civic Auth to access ChainHire. Secure, passwordless authentication with an embedded Web3 wallet.'}
+                : 'Sign in with Civic Auth or connect your existing wallet.'}
             </p>
           </div>
 
@@ -64,25 +77,36 @@ export default function Auth() {
               <p className="text-sm text-muted-foreground">Setting up your wallet...</p>
             </div>
           ) : (
-            <div className="flex justify-center">
-              <UserButton />
+            <div className="space-y-6">
+              {/* Civic Auth (email, Google, etc.) */}
+              <div className="flex justify-center">
+                <UserButton />
+              </div>
+
+              {/* Divider */}
+              <div className="flex items-center gap-3">
+                <div className="flex-1 h-px bg-border" />
+                <span className="text-xs text-muted-foreground font-mono uppercase">or connect wallet</span>
+                <div className="flex-1 h-px bg-border" />
+              </div>
+
+              {/* External wallet connectors */}
+              <div className="grid gap-3">
+                {externalConnectors.map((connector) => (
+                  <Button
+                    key={connector.uid}
+                    variant="outline"
+                    className="w-full glass border-glass-border/50 gap-3 h-12 text-sm font-medium hover:border-neon/30 transition-colors"
+                    onClick={() => connect({ connector })}
+                    disabled={isPending}
+                  >
+                    <Wallet className="h-4 w-4 text-muted-foreground" />
+                    {connector.name}
+                  </Button>
+                ))}
+              </div>
             </div>
           )}
-
-          {/* Supported methods */}
-          <div className="space-y-3">
-            <p className="text-xs text-muted-foreground font-mono uppercase tracking-wider">Powered by Civic Auth</p>
-            <div className="flex justify-center gap-4">
-              {['Email', 'Google', 'Wallet'].map((name) => (
-                <div key={name} className="flex flex-col items-center gap-1.5">
-                  <div className="h-10 w-10 rounded-lg glass border-glass-border/50 flex items-center justify-center">
-                    <Hexagon className="h-5 w-5 text-muted-foreground" />
-                  </div>
-                  <span className="text-[10px] text-muted-foreground">{name}</span>
-                </div>
-              ))}
-            </div>
-          </div>
 
           {/* Badge */}
           <div className="flex items-center justify-center gap-2 text-xs font-mono text-muted-foreground">
