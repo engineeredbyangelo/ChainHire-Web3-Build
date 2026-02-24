@@ -115,7 +115,7 @@ const audiences = [
     color: '#00ffaa',
   },
   {
-    shape: 'torusKnot' as AudienceShape,
+    shape: 'blockchain' as AudienceShape,
     label: 'Web3 Developers',
     desc: 'Secure milestone-based contracts for smart contract audits, dApp front-ends, and protocol integrations.',
     tag: 'DEPLOY',
