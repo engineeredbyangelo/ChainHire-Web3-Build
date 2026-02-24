@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Shield, Users, Zap, TrendingUp, Globe, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Shield, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { HeroScene } from '@/components/landing/HeroScene';
 import { FeatureWireframeCard } from '@/components/landing/FeatureWireframeCard';
+import { AudienceWireframeIcon } from '@/components/landing/AudienceWireframeIcon';
+import type { AudienceShape } from '@/components/landing/AudienceWireframeIcon';
 import type { ShapeType } from '@/components/landing/WireframeShape';
 
 const fadeUp = {
@@ -104,40 +106,40 @@ const features: Array<{ title: string; desc: string; contractAddress: string; co
 
 const audiences = [
   {
-    icon: Users,
+    shape: 'octahedron' as AudienceShape,
     label: 'DAO Contributors',
     desc: 'Get paid reliably for governance proposals, treasury management, and protocol development work.',
     tag: 'GOVERNANCE',
-    visual: '⚖️',
     code: 'dao.propose({ action: "fund", amount: 5000 });',
     accent: 'neon' as const,
+    color: '#00ffaa',
   },
   {
-    icon: Zap,
+    shape: 'torusKnot' as AudienceShape,
     label: 'Web3 Developers',
     desc: 'Secure milestone-based contracts for smart contract audits, dApp front-ends, and protocol integrations.',
     tag: 'DEPLOY',
-    visual: '⛓️',
     code: 'contract.deploy({ network: "polygon" });',
     accent: 'violet' as const,
+    color: '#8b5cf6',
   },
   {
-    icon: TrendingUp,
+    shape: 'icosahedron' as AudienceShape,
     label: 'NFT Artists & Creators',
     desc: 'Protect your creative work with escrowed commissions — from PFP collections to generative art.',
     tag: 'MINT',
-    visual: '🎨',
     code: 'nft.mint({ collection: "genesis", royalty: 7.5 });',
     accent: 'cyan' as const,
+    color: '#22b8cf',
   },
   {
-    icon: Globe,
+    shape: 'dodecahedron' as AudienceShape,
     label: 'Crypto-Native Founders',
     desc: 'Hire contractors globally with trustless guarantees. No borders, no banks, no middlemen.',
     tag: 'SCALE',
-    visual: '🚀',
     code: 'escrow.create({ global: true, kyc: false });',
     accent: 'neon' as const,
+    color: '#00ffaa',
   },
 ];
 
@@ -236,15 +238,11 @@ export default function Landing() {
                     <div className="flex items-start justify-between mb-5">
                       <div className="flex items-center gap-3">
                         <div className={`flex h-11 w-11 items-center justify-center rounded-xl border transition-shadow ${
-                          accentColor === 'neon' ? 'bg-neon/10 border-neon/20 group-hover:glow-neon' :
-                          accentColor === 'violet' ? 'bg-violet/10 border-violet/20 group-hover:glow-violet' :
-                          'bg-cyan/10 border-cyan/20 group-hover:glow-cyan'
+                          accentColor === 'neon' ? 'border-neon/20 group-hover:glow-neon' :
+                          accentColor === 'violet' ? 'border-violet/20 group-hover:glow-violet' :
+                          'border-cyan/20 group-hover:glow-cyan'
                         }`}>
-                          <a.icon className={`h-5 w-5 ${
-                            accentColor === 'neon' ? 'text-neon' :
-                            accentColor === 'violet' ? 'text-violet' :
-                            'text-cyan'
-                          }`} />
+                          <AudienceWireframeIcon shape={a.shape} color={a.color} className="h-11 w-11" />
                         </div>
                         <div>
                           <h3 className="font-bold text-lg text-foreground">{a.label}</h3>
@@ -255,7 +253,6 @@ export default function Landing() {
                           }`}>{a.tag}</span>
                         </div>
                       </div>
-                      <span className="text-4xl opacity-80 group-hover:scale-110 transition-transform">{a.visual}</span>
                     </div>
 
                     {/* Description */}
