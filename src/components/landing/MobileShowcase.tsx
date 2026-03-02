@@ -180,12 +180,12 @@ export function MobileShowcase() {
 
         {/* Web3-oriented layout: side-by-side with protocol details */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left: Protocol context & step details */}
+          {/* Left: Protocol context & step details (hidden on mobile) */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="space-y-8 order-2 lg:order-1"
+            className="hidden lg:flex flex-col space-y-8 order-2 lg:order-1"
           >
             {/* Protocol stats bar */}
             <div className="grid grid-cols-3 gap-3">
@@ -252,8 +252,8 @@ export function MobileShowcase() {
             </div>
           </motion.div>
 
-          {/* Right: Phone mockup */}
-          <motion.div style={{ y, opacity }} className="flex justify-center order-1 lg:order-2">
+          {/* Right: Phone mockup (full-width centered on mobile) */}
+          <motion.div style={{ y, opacity }} className="flex justify-center lg:order-2">
             <div className="relative mx-auto">
               {/* Phone bezel */}
               <div className="relative w-[280px] sm:w-[320px] rounded-[3rem] border-[6px] border-foreground/10 bg-background shadow-2xl shadow-neon/10 overflow-hidden">
