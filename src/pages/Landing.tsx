@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { HeroScene } from '@/components/landing/HeroScene';
 import { FeatureWireframeCard } from '@/components/landing/FeatureWireframeCard';
 import { AudienceWireframeIcon } from '@/components/landing/AudienceWireframeIcon';
+import { MobileShowcase } from '@/components/landing/MobileShowcase';
 import type { AudienceShape } from '@/components/landing/AudienceWireframeIcon';
 import type { ShapeType } from '@/components/landing/WireframeShape';
 
@@ -196,8 +197,8 @@ export default function Landing() {
             <p className="text-muted-foreground max-w-lg mx-auto">A complete escrow protocol designed for the way web3 teams actually work.</p>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((f) => (
-              <FeatureWireframeCard key={f.title} {...f} />
+            {features.map((f, i) => (
+              <FeatureWireframeCard key={f.title} {...f} index={i} />
             ))}
           </div>
         </div>
@@ -274,6 +275,9 @@ export default function Landing() {
           </div>
         </div>
       </section>
+
+      {/* ===== MOBILE SHOWCASE ===== */}
+      <MobileShowcase />
 
       {/* ===== BENEFITS ===== */}
       <section className="py-24">
