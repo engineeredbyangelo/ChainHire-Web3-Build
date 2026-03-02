@@ -204,6 +204,9 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ===== LIVE PROTOCOL WALKTHROUGH ===== */}
+      <MobileShowcase />
+
       {/* ===== WHO IT'S FOR ===== */}
       <section className="py-24 relative grid-bg">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
@@ -275,9 +278,6 @@ export default function Landing() {
           </div>
         </div>
       </section>
-
-      {/* ===== MOBILE SHOWCASE ===== */}
-      <MobileShowcase />
 
       {/* ===== BENEFITS ===== */}
       <section className="py-24">
