@@ -9,61 +9,57 @@ interface FeatureWireframeCardProps {
   contractAddress: string;
   code: string[];
   shape: ShapeType;
+  index: number;
 }
 
-export function FeatureWireframeCard({ title, desc, contractAddress, code, shape }: FeatureWireframeCardProps) {
+export function FeatureWireframeCard({ title, desc, contractAddress, code, shape, index }: FeatureWireframeCardProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="group relative rounded-xl overflow-hidden border-l-2 border-l-neon/60 border border-glass-border/30 bg-card hover:glow-neon transition-shadow duration-500"
+      transition={{ delay: index * 0.08, duration: 0.5 }}
+      className="group relative rounded-2xl overflow-hidden border border-glass-border/30 bg-card hover:glow-neon transition-shadow duration-500 flex flex-col"
     >
-      {/* 3D Canvas */}
-      <div className="h-[180px] w-full relative bg-background/60">
-        <Canvas camera={{ position: [0, 0, 3.5], fov: 45 }} dpr={[1, 1]}>
-          <ambientLight intensity={0.4} />
-          <pointLight position={[3, 3, 3]} intensity={0.6} color="#00ffaa" />
-          <pointLight position={[-3, -2, 2]} intensity={0.3} color="#7c3aed" />
-          <Suspense fallback={null}>
-            <WireframeShape shape={shape} />
-          </Suspense>
-        </Canvas>
-        {/* Fade overlay at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-card to-transparent" />
-      </div>
+      {/* Top accent bar */}
+      <div className="h-0.5 w-full bg-gradient-to-r from-neon/60 via-violet/40 to-transparent" />
 
-      {/* Contract header */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-glass-border/30 bg-secondary/40">
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-neon animate-pulse-glow" />
-          <span className="text-xs font-mono text-muted-foreground">{contractAddress}</span>
+      {/* Main content: text-first layout */}
+      <div className="flex flex-col sm:flex-row items-start gap-5 p-6 sm:p-7 flex-1">
+        {/* Wireframe icon — compact */}
+        <div className="shrink-0 h-16 w-16 rounded-xl border border-glass-border/30 bg-background/60 overflow-hidden">
+          <Canvas camera={{ position: [0, 0, 3.5], fov: 45 }} dpr={[1, 1]}>
+            <ambientLight intensity={0.4} />
+            <pointLight position={[3, 3, 3]} intensity={0.6} color="#00ffaa" />
+            <pointLight position={[-3, -2, 2]} intensity={0.3} color="#7c3aed" />
+            <Suspense fallback={null}>
+              <WireframeShape shape={shape} />
+            </Suspense>
+          </Canvas>
         </div>
-        <span className="text-[10px] font-mono font-semibold tracking-widest text-neon/80 uppercase">Deployed</span>
-      </div>
 
-      {/* Code block */}
-      <div className="px-4 py-3 font-mono text-xs leading-relaxed border-b border-glass-border/20 bg-background/40">
-        {code.map((line, i) => (
-          <div key={i} className="flex gap-3">
-            <span className="text-muted-foreground/40 select-none w-4 text-right shrink-0">{i + 1}</span>
-            <span
-              className="text-muted-foreground group-hover:text-foreground/80 transition-colors"
-              dangerouslySetInnerHTML={{
-                __html: line
-                  .replace(/(function|contract|external|payable|returns|event|modifier|uint256|address|bool|mapping)/g, '<span class="text-violet">$1</span>')
-                  .replace(/(\/\/.*)/g, '<span class="text-neon/60">$1</span>')
-                  .replace(/(".*?")/g, '<span class="text-cyan">$1</span>'),
-              }}
-            />
+        {/* Text content — prominent */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="h-2 w-2 rounded-full bg-neon animate-pulse-glow shrink-0" />
+            <span className="text-[10px] font-mono font-semibold tracking-widest text-neon/80 uppercase">
+              {contractAddress}
+            </span>
           </div>
-        ))}
+          <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2 font-display leading-tight">
+            {title}
+          </h3>
+          <p className="text-base text-muted-foreground leading-relaxed">
+            {desc}
+          </p>
+        </div>
       </div>
 
-      {/* Description */}
-      <div className="px-4 py-3">
-        <h3 className="text-sm font-semibold text-foreground mb-1">{title}</h3>
-        <p className="text-xs text-muted-foreground leading-relaxed">{desc}</p>
+      {/* Code block — secondary, collapsed */}
+      <div className="px-6 sm:px-7 pb-5">
+        <div className="rounded-lg bg-secondary/40 border border-glass-border/20 px-4 py-3 font-mono text-xs leading-relaxed text-muted-foreground/70 group-hover:text-muted-foreground transition-colors overflow-x-auto">
+          <code className="whitespace-pre">{code.join('\n')}</code>
+        </div>
       </div>
     </motion.div>
   );
