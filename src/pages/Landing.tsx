@@ -21,7 +21,7 @@ const fadeUp = {
 const features: Array<{ title: string; desc: string; contractAddress: string; code: string[]; shape: ShapeType }> = [
   {
     title: 'Non-Custodial Escrow',
-    desc: 'Funds are held in audited smart contracts on Polygon. No intermediary ever touches your USDC.',
+    desc: 'Funds are held in audited smart contracts on Polygon. No intermediary ever touches your USDC. Milestone-based releases ensure work is verified before payment.',
     contractAddress: '0x7F2c...E9a1',
     shape: 'dodecahedron',
     code: [
@@ -34,22 +34,8 @@ const features: Array<{ title: string; desc: string; contractAddress: string; co
     ],
   },
   {
-    title: 'Sequential Milestones',
-    desc: 'Break work into milestones. Funds release only when each phase is approved.',
-    contractAddress: '0xA3d8...B4c2',
-    shape: 'torusKnot',
-    code: [
-      '// Milestone Progression',
-      'function completeMilestone(',
-      '  uint256 milestoneId',
-      ') external {',
-      '  require(isSequential(milestoneId));',
-      '}',
-    ],
-  },
-  {
-    title: 'Auto-Release Timer',
-    desc: 'Built-in 7-day countdown protects freelancers. No response? Funds auto-release.',
+    title: 'Auto-Release & Deadlines',
+    desc: 'Built-in 7-day countdown protects freelancers. No client response? Funds auto-release on-chain. No more chasing invoices.',
     contractAddress: '0xC5e1...D7f3',
     shape: 'torus',
     code: [
@@ -63,7 +49,7 @@ const features: Array<{ title: string; desc: string; contractAddress: string; co
   },
   {
     title: 'Fair Arbitration',
-    desc: 'Disputes resolved by neutral arbitrators for a flat 2.5% fee. Evidence-based outcomes.',
+    desc: 'Disputes resolved by neutral arbitrators for a flat 2.5% fee. Evidence-based, on-chain outcomes with transparent split logic.',
     contractAddress: '0xE9b4...F2a6',
     shape: 'octahedron',
     code: [
@@ -76,7 +62,7 @@ const features: Array<{ title: string; desc: string; contractAddress: string; co
   },
   {
     title: 'On-Chain Reputation',
-    desc: 'Every completed escrow builds your verifiable reputation. Bronze → Diamond.',
+    desc: 'Every completed escrow builds your verifiable reputation. Bronze → Diamond. Fully permissionless and borderless — anyone, anywhere.',
     contractAddress: '0x1B3c...8D5e',
     shape: 'icosahedron',
     code: [
@@ -85,22 +71,6 @@ const features: Array<{ title: string; desc: string; contractAddress: string; co
       '  address indexed user,',
       '  uint256 newScore',
       ');',
-    ],
-  },
-  {
-    title: 'Global & Permissionless',
-    desc: 'No KYC, no borders, no bank accounts. Connect your wallet and start working.',
-    contractAddress: '0x4F7a...2E9c',
-    shape: 'sphere',
-    code: [
-      '// Permissionless Access',
-      'modifier onlyParticipant() {',
-      '  require(',
-      '    msg.sender == client ||',
-      '    msg.sender == freelancer',
-      '  );',
-      '  _;',
-      '}',
     ],
   },
 ];
