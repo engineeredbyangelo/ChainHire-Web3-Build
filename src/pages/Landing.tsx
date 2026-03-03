@@ -166,9 +166,14 @@ export default function Landing() {
             <h2 className="text-3xl sm:text-4xl font-bold mb-4 font-display">How <span className="text-gradient">ChainHire</span> Works</h2>
             <p className="text-muted-foreground max-w-lg mx-auto">A complete escrow protocol designed for the way web3 teams actually work.</p>
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="max-w-4xl mx-auto space-y-8">
             {features.map((f, i) => (
-              <FeatureWireframeCard key={f.title} {...f} index={i} />
+              <div
+                key={f.title}
+                className={`md:w-[85%] ${i % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'}`}
+              >
+                <FeatureWireframeCard {...f} index={i} />
+              </div>
             ))}
           </div>
         </div>
