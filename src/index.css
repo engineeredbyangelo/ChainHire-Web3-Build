@@ -144,5 +144,19 @@
       linear-gradient(hsl(var(--neon) / 0.08) 1px, transparent 1px),
       linear-gradient(90deg, hsl(var(--neon) / 0.08) 1px, transparent 1px);
     background-size: 60px 60px;
+    animation: grid-pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes grid-pulse {
+    0%, 100% {
+      background-image:
+        linear-gradient(hsl(var(--neon) / 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, hsl(var(--neon) / 0.06) 1px, transparent 1px);
+    }
+    50% {
+      background-image:
+        linear-gradient(hsl(var(--neon) / 0.14) 1px, transparent 1px),
+        linear-gradient(90deg, hsl(var(--neon) / 0.14) 1px, transparent 1px);
+    }
   }
 }
