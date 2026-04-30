@@ -167,20 +167,26 @@ export default function Docs() {
   return (
     <div className="relative min-h-screen">
       {/* Header */}
-      <section className="border-b border-border py-12 grid-bg relative">
+      <section className="border-b border-silver/10 py-14 grid-bg relative">
         <div className="absolute inset-0 bg-gradient-to-b from-background/40 to-background" />
+        <div className="aura aura-cyan w-[420px] h-[420px] -top-32 -right-20 opacity-40" />
         <div className="container relative">
-          <Button asChild variant="ghost" size="sm" className="mb-6 text-muted-foreground gap-2">
+          <Button asChild variant="ghost" size="sm" className="mb-6 text-silver-mute hover:text-silver gap-2">
             <Link to="/"><ArrowLeft className="h-4 w-4" /> Back to Home</Link>
           </Button>
           <motion.div initial="hidden" animate="visible" className="max-w-2xl">
             <motion.div variants={fadeUp} custom={0} className="flex items-center gap-3 mb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg gradient-neon">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan glow-cyan">
                 <BookOpen className="h-5 w-5 text-primary-foreground" />
               </div>
-              <h1 className="text-3xl sm:text-4xl font-bold font-display">Documentation</h1>
+              <div>
+                <span className="block text-[10px] font-mono text-silver-mute tracking-boutique uppercase mb-1">
+                  Reference
+                </span>
+                <h1 className="text-3xl sm:text-4xl font-semibold tracking-[-0.02em] text-silver">Documentation</h1>
+              </div>
             </motion.div>
-            <motion.p variants={fadeUp} custom={1} className="text-muted-foreground text-lg">
+            <motion.p variants={fadeUp} custom={1} className="text-silver-mute text-lg">
               Everything you need to know about creating, managing, and settling escrow contracts on ChainHire.
             </motion.p>
           </motion.div>
@@ -188,13 +194,13 @@ export default function Docs() {
       </section>
 
       {/* Mobile TOC toggle */}
-      <div className="lg:hidden sticky top-16 z-40 border-b border-border bg-background/90 backdrop-blur-lg">
+      <div className="lg:hidden sticky top-16 z-40 border-b border-silver/10 bg-background/90 backdrop-blur-lg">
         <button
           onClick={() => setMobileTocOpen(!mobileTocOpen)}
-          className="container flex items-center justify-between w-full py-3 text-sm font-medium text-foreground"
+          className="container flex items-center justify-between w-full py-3 text-sm font-medium text-silver"
         >
           <span className="flex items-center gap-2">
-            <BookOpen className="h-4 w-4 text-neon" />
+            <BookOpen className="h-4 w-4 text-cyan" />
             On this page
           </span>
           {mobileTocOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
@@ -211,7 +217,7 @@ export default function Docs() {
                 key={t.id}
                 href={`#${t.id}`}
                 onClick={() => setMobileTocOpen(false)}
-                className="block text-sm text-muted-foreground hover:text-foreground py-1.5 px-3 rounded-md hover:bg-secondary/50 transition-colors"
+                className="block text-sm text-silver-mute hover:text-silver py-1.5 px-3 rounded-md hover:bg-obsidian/60 transition-colors"
               >
                 {t.title}
               </a>
@@ -225,12 +231,12 @@ export default function Docs() {
           {/* Sidebar TOC — desktop only */}
           <aside className="hidden lg:block">
             <div className="sticky top-24 space-y-1">
-              <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-3">On this page</p>
+              <p className="text-[10px] font-mono text-silver-mute uppercase tracking-boutique mb-3">On this page</p>
               {toc.map(t => (
                 <a
                   key={t.id}
                   href={`#${t.id}`}
-                  className="block text-sm text-muted-foreground hover:text-foreground py-1.5 px-3 rounded-md hover:bg-secondary/50 transition-colors"
+                  className="block text-sm text-silver-mute hover:text-silver py-1.5 px-3 rounded-md hover:bg-obsidian/60 transition-colors"
                 >
                   {t.title}
                 </a>
@@ -240,39 +246,39 @@ export default function Docs() {
 
           {/* Content */}
           <div className="space-y-16 min-w-0">
-            {sections.map((section, idx) => (
+            {sections.map((section) => (
               <motion.section
                 key={section.id}
                 id={section.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
-                transition={{ delay: 0.05, duration: 0.5 }}
+                transition={{ type: 'spring', stiffness: 140, damping: 20 }}
                 className="scroll-mt-24"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-neon/10 border border-neon/20 shrink-0">
-                    <section.icon className="h-4 w-4 text-neon" />
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan/10 border border-cyan/20 shrink-0">
+                    <section.icon className="h-4 w-4 text-cyan" />
                   </div>
-                  <h2 className="text-xl sm:text-2xl font-bold font-display">{section.title}</h2>
+                  <h2 className="text-xl sm:text-2xl font-semibold tracking-[-0.02em] text-silver">{section.title}</h2>
                 </div>
-                <div className="space-y-3 text-muted-foreground leading-relaxed">
+                <div className="space-y-3 text-silver-mute leading-relaxed">
                   {section.content.map((para, i) => (
                     <p key={i} className="break-words">{para}</p>
                   ))}
                 </div>
                 {section.code && (
-                  <div className="mt-4 rounded-lg border border-border bg-secondary/30 overflow-hidden">
-                    <div className="flex items-center gap-2 px-4 py-2 border-b border-border bg-secondary/50">
-                      <span className="h-2 w-2 rounded-full bg-neon/60" />
-                      <span className="text-xs font-mono text-muted-foreground">Solidity</span>
+                  <div className="mt-5 rounded-xl border border-silver/10 bg-obsidian/60 overflow-hidden">
+                    <div className="flex items-center gap-2 px-4 py-2.5 border-b border-silver/10 bg-obsidian/80">
+                      <span className="h-2 w-2 rounded-full bg-cyan animate-pulse-glow" />
+                      <span className="text-[10px] font-mono text-silver-mute tracking-boutique uppercase">Solidity</span>
                     </div>
                     <div className="overflow-x-auto">
                       <pre className="p-4 text-xs sm:text-sm font-mono min-w-0">
                         {section.code.map((line, i) => (
                           <div key={i} className="flex">
-                            <span className="w-6 sm:w-8 text-right pr-3 sm:pr-4 text-muted-foreground/40 select-none shrink-0">{i + 1}</span>
-                            <span className="text-foreground/80 whitespace-pre">{line}</span>
+                            <span className="w-6 sm:w-8 text-right pr-3 sm:pr-4 text-silver-mute/40 select-none shrink-0">{i + 1}</span>
+                            <span className="text-silver/90 whitespace-pre">{line}</span>
                           </div>
                         ))}
                       </pre>
@@ -287,11 +293,18 @@ export default function Docs() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="gradient-border rounded-xl p-8 text-center space-y-4"
+              transition={{ type: 'spring', stiffness: 140, damping: 20 }}
+              className="glass-strong grain rounded-3xl p-10 text-center space-y-4 relative overflow-hidden"
             >
-              <h3 className="text-xl font-bold font-display">Ready to get started?</h3>
-              <p className="text-muted-foreground text-sm">Connect your wallet and create your first escrow contract.</p>
-              <Button asChild className="gradient-neon text-primary-foreground font-semibold gap-2 glow-neon">
+              <div className="aura aura-cyan w-80 h-80 -top-20 left-1/2 -translate-x-1/2 opacity-40" />
+              <span className="relative inline-block text-[10px] font-mono text-silver-mute tracking-boutique uppercase">
+                Get Started
+              </span>
+              <h3 className="relative text-2xl font-semibold tracking-[-0.02em] text-silver">
+                Ready to deploy your first <span className="text-gradient">escrow?</span>
+              </h3>
+              <p className="relative text-silver-mute text-sm">Connect your wallet and create a contract in minutes.</p>
+              <Button asChild className="relative bg-cyan text-primary-foreground hover:bg-cyan-glow font-semibold gap-2 glow-cyan rounded-xl">
                 <Link to="/auth">Launch App <ArrowRight className="h-4 w-4" /></Link>
               </Button>
             </motion.div>
