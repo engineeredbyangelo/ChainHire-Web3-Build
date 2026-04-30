@@ -108,12 +108,17 @@ export default function Profile() {
     : 0;
 
   return (
-    <div className="container max-w-4xl py-8 space-y-8">
-      <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
+    <div className="container max-w-4xl py-12 space-y-8">
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: 'spring', stiffness: 140, damping: 20 }}
+        className="space-y-8"
+      >
         {/* Header */}
-        <div className="gradient-border rounded-xl p-6 flex flex-col sm:flex-row items-center gap-6">
+        <div className="glass grain rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-6">
           <div className="relative">
-            <div className="h-20 w-20 rounded-full gradient-neon flex items-center justify-center glow-neon">
+            <div className="h-20 w-20 rounded-full bg-cyan flex items-center justify-center glow-cyan ring-1 ring-silver/15">
               <Shield className="h-10 w-10 text-primary-foreground" />
             </div>
           </div>
@@ -122,7 +127,7 @@ export default function Profile() {
             <Input
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              className="text-lg font-bold bg-transparent border-none p-0 h-auto focus-visible:ring-0 text-foreground text-center sm:text-left"
+              className="text-lg font-semibold tracking-[-0.01em] bg-transparent border-none p-0 h-auto focus-visible:ring-0 text-silver text-center sm:text-left"
             />
             {activeWallet ? (
               <button
@@ -130,13 +135,13 @@ export default function Profile() {
                   navigator.clipboard.writeText(activeWallet);
                   toast({ title: 'Copied', description: 'Wallet address copied.' });
                 }}
-                className="flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-foreground transition-colors mx-auto sm:mx-0"
+                className="flex items-center gap-1.5 text-xs font-mono text-silver-mute hover:text-silver transition-colors mx-auto sm:mx-0"
               >
                 {activeWallet.slice(0, 6)}…{activeWallet.slice(-4)}
                 <Copy className="h-3 w-3" />
               </button>
             ) : (
-              <p className="text-xs text-muted-foreground font-mono mx-auto sm:mx-0">No wallet connected</p>
+              <p className="text-xs text-silver-mute font-mono mx-auto sm:mx-0">No wallet connected</p>
             )}
           </div>
 
@@ -144,16 +149,16 @@ export default function Profile() {
         </div>
 
         {/* Wallet Connection Section */}
-        <div className="gradient-border rounded-xl p-6 space-y-4">
+        <div className="glass grain rounded-2xl p-6 space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-foreground flex items-center gap-2">
-              <Wallet className="h-4 w-4 text-neon" />
+            <h2 className="text-sm font-semibold text-silver flex items-center gap-2 tracking-[-0.01em]">
+              <Wallet className="h-4 w-4 text-cyan" />
               Wallet Connection
             </h2>
             {activeWallet && (
               <button
                 onClick={handleDisconnect}
-                className="text-xs text-muted-foreground hover:text-destructive transition-colors"
+                className="text-xs text-silver-mute hover:text-destructive transition-colors"
               >
                 Disconnect
               </button>
@@ -161,37 +166,37 @@ export default function Profile() {
           </div>
 
           {activeWallet ? (
-            <div className="flex items-center gap-3 p-3 rounded-lg bg-secondary/40 border border-neon/20">
-              <span className="h-2 w-2 rounded-full bg-neon animate-pulse" />
-              <span className="text-xs font-mono text-foreground">{activeWallet}</span>
-              <span className="ml-auto text-[10px] text-neon font-medium">Connected</span>
+            <div className="flex items-center gap-3 p-3 rounded-xl bg-obsidian/60 border border-cyan/20">
+              <span className="h-2 w-2 rounded-full bg-cyan animate-pulse" />
+              <span className="text-xs font-mono text-silver">{activeWallet}</span>
+              <span className="ml-auto text-[10px] text-cyan font-medium tracking-boutique uppercase">Connected</span>
             </div>
           ) : (
             <div className="space-y-3">
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-silver-mute">
                 Connect an external wallet to use on-chain escrow features.
               </p>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 {externalConnectors.map((connector) => {
                   const IconComp = getWalletIcon(connector);
                   return (
                     <motion.button
                       key={connector.uid}
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
+                      whileHover={{ scale: 1.04, y: -2 }}
+                      whileTap={{ scale: 0.96 }}
                       onClick={() => handleConnect(connector)}
                       disabled={isPending || savingWallet}
-                      className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-secondary/60 border border-border hover:border-neon/40 transition-colors disabled:opacity-50 disabled:pointer-events-none"
+                      className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-obsidian/60 border border-silver/15 hover:border-cyan/40 transition-colors disabled:opacity-50 disabled:pointer-events-none"
                       title={connector.name}
                     >
                       <IconComp />
-                      <span className="text-xs font-medium text-foreground">{connector.name}</span>
+                      <span className="text-xs font-medium text-silver">{connector.name}</span>
                     </motion.button>
                   );
                 })}
               </div>
               {(isPending || savingWallet) && (
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <div className="flex items-center gap-2 text-xs text-silver-mute">
                   <Loader2 className="h-3 w-3 animate-spin" />
                   {savingWallet ? 'Saving wallet…' : 'Connecting…'}
                 </div>
@@ -211,14 +216,14 @@ export default function Profile() {
         {/* Escrow History */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-foreground font-display">Escrow History</h2>
+            <h2 className="text-lg font-semibold tracking-[-0.01em] text-silver">Escrow History</h2>
             <div className="flex gap-1">
               {(['all', 'active', 'completed', 'disputed'] as Filter[]).map((f) => (
                 <button
                   key={f}
                   onClick={() => setFilter(f)}
-                  className={`px-3 py-1 rounded-md text-xs font-medium transition-colors capitalize ${
-                    filter === f ? 'bg-secondary text-foreground' : 'text-muted-foreground hover:text-foreground'
+                  className={`px-3 py-1 rounded-md text-[11px] font-mono tracking-boutique uppercase transition-colors ${
+                    filter === f ? 'bg-cyan/10 text-cyan' : 'text-silver-mute hover:text-silver'
                   }`}
                 >
                   {f}

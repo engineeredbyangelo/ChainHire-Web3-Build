@@ -22,17 +22,17 @@ export function Navbar() {
 
   return (
     <nav className={cn(
-      "sticky top-0 z-50 border-b",
-      isLanding
-        ? "bg-background/60 backdrop-blur-xl border-border/30"
-        : "glass border-glass-border/30"
+      "sticky top-0 z-50 border-b border-silver/10",
+      isLanding ? "bg-background/50 backdrop-blur-xl" : "glass"
     )}>
       <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg gradient-neon">
+        <Link to="/" className="flex items-center gap-2.5 group">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan glow-cyan">
             <Shield className="h-4 w-4 text-primary-foreground" />
           </div>
-          <span className="text-lg font-bold text-gradient font-display">ChainHire</span>
+          <span className="text-base font-semibold tracking-[-0.01em] text-silver group-hover:text-gradient transition-colors">
+            ChainHire
+          </span>
         </Link>
 
         {/* Desktop Nav */}
@@ -81,7 +81,7 @@ export function Navbar() {
               </Button>
             </>
           ) : !isLanding ? (
-            <Button asChild className="gradient-neon text-primary-foreground gap-2">
+            <Button asChild className="bg-cyan text-primary-foreground hover:bg-cyan-glow glow-cyan gap-2 rounded-xl">
               <Link to="/auth"><Wallet className="h-4 w-4" /> Connect</Link>
             </Button>
           ) : null}
@@ -120,7 +120,7 @@ export function Navbar() {
               <Button variant="ghost" size="icon" onClick={signOut}><LogOut className="h-4 w-4" /></Button>
             </div>
           ) : (
-            <Button asChild className="w-full gradient-neon text-primary-foreground gap-2 mt-2">
+            <Button asChild className="w-full bg-cyan text-primary-foreground hover:bg-cyan-glow glow-cyan gap-2 mt-2 rounded-xl">
               <Link to="/auth" onClick={() => setMobileOpen(false)}><Wallet className="h-4 w-4" /> Connect</Link>
             </Button>
           )}

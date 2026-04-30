@@ -91,6 +91,16 @@
   code, .font-mono {
     font-family: 'JetBrains Mono', monospace;
   }
+
+  .font-display {
+    font-family: 'Inter', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+
+  h1, h2, h3, h4 {
+    letter-spacing: -0.02em;
+  }
 }
 
 @layer utilities {
