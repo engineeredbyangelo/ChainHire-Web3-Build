@@ -14,9 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
-        display: ['"Orbitron"', 'system-ui', 'sans-serif'],
+        display: ['Inter', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -85,6 +85,12 @@ export default {
         glass: {
           DEFAULT: "hsl(var(--glass))",
           border: "hsl(var(--glass-border))",
+        },
+        obsidian: "hsl(var(--obsidian))",
+        midnight: "hsl(var(--midnight))",
+        silver: {
+          DEFAULT: "hsl(var(--silver))",
+          mute: "hsl(var(--silver-mute))",
         },
       },
       borderRadius: {
