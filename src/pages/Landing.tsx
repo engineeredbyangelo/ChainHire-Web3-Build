@@ -379,20 +379,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ===== FOOTER ===== */}
-      <footer className="border-t border-silver/10 py-8">
-        <div className="container flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="flex h-6 w-6 items-center justify-center rounded bg-cyan">
-              <Shield className="h-3 w-3 text-primary-foreground" />
-            </div>
-            <span className="font-semibold text-sm text-silver tracking-tight">ChainHire</span>
-          </div>
-          <p className="text-[11px] text-silver-mute font-mono tracking-wider">
-            © 2026 ChainHire Protocol · Built on Polygon
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
