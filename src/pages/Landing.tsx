@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Shield, CheckCircle2 } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { HeroScene } from '@/components/landing/HeroScene';
 import { FeatureWireframeCard } from '@/components/landing/FeatureWireframeCard';
@@ -154,25 +154,18 @@ export default function Landing() {
 
             {/* Glass-Card CTA */}
             <motion.div variants={fadeUp} custom={3} className="pt-2 flex justify-center">
-              <div className="glass-strong rounded-2xl p-2 sm:p-2.5 flex flex-col sm:flex-row items-center gap-2 sm:gap-3 w-full max-w-md sm:max-w-none sm:w-auto">
-                <motion.div whileHover={{ y: -1 }} whileTap={{ scale: 0.97 }} className="w-full sm:w-auto">
-                  <Button
-                    asChild
-                    size="lg"
-                    className="bg-cyan text-primary-foreground hover:bg-cyan-glow font-semibold text-base glow-cyan gap-2 px-7 rounded-xl w-full sm:w-auto"
-                  >
-                    <Link to="/auth">
-                      Launch App <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                </motion.div>
-                <Link
-                  to="/docs"
-                  className="text-sm text-silver-mute hover:text-silver transition-colors px-3 font-mono tracking-wider uppercase"
+              <motion.div whileHover={{ y: -1 }} whileTap={{ scale: 0.97 }}>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="glass border-silver/20 text-silver hover:text-foreground hover:border-cyan/40 font-semibold text-base gap-2 px-7 rounded-xl"
                 >
-                  Read Docs →
-                </Link>
-              </div>
+                  <Link to="/docs">
+                    Read Docs <span aria-hidden="true">→</span>
+                  </Link>
+                </Button>
+              </motion.div>
             </motion.div>
 
             <motion.p variants={fadeUp} custom={4} className="text-[11px] text-silver-mute/80 pt-1 font-mono tracking-wider">
@@ -362,22 +355,23 @@ export default function Landing() {
             className="glass-strong grain rounded-3xl max-w-3xl mx-auto p-12 sm:p-16 text-center space-y-6"
           >
             <span className="inline-block text-[10px] font-mono text-silver-mute tracking-boutique uppercase">
-              Get Started
+              Coming Soon
             </span>
             <h2 className="text-4xl sm:text-6xl font-semibold tracking-[-0.03em] leading-[1.05]">
               Work <span className="text-gradient">trustlessly.</span>
             </h2>
             <p className="text-silver-mute text-base max-w-md mx-auto">
-              Connect your wallet and create your first escrow in under two minutes.
+              Read the docs to learn how ChainHire will work once we go live.
             </p>
             <motion.div whileHover={{ y: -1 }} whileTap={{ scale: 0.97 }} className="inline-block pt-2">
               <Button
                 asChild
                 size="lg"
-                className="bg-cyan text-primary-foreground hover:bg-cyan-glow font-semibold text-base glow-cyan gap-2 px-10 rounded-xl"
+                variant="outline"
+                className="glass border-silver/20 text-silver hover:text-foreground hover:border-cyan/40 font-semibold text-base gap-2 px-10 rounded-xl"
               >
-                <Link to="/auth">
-                  Launch App <ArrowRight className="h-4 w-4" />
+                <Link to="/docs">
+                  Read Docs <span aria-hidden="true">→</span>
                 </Link>
               </Button>
             </motion.div>
@@ -385,20 +379,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ===== FOOTER ===== */}
-      <footer className="border-t border-silver/10 py-8">
-        <div className="container flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <div className="flex h-6 w-6 items-center justify-center rounded bg-cyan">
-              <Shield className="h-3 w-3 text-primary-foreground" />
-            </div>
-            <span className="font-semibold text-sm text-silver tracking-tight">ChainHire</span>
-          </div>
-          <p className="text-[11px] text-silver-mute font-mono tracking-wider">
-            © 2026 ChainHire Protocol · Built on Polygon
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }
