@@ -154,25 +154,18 @@ export default function Landing() {
 
             {/* Glass-Card CTA */}
             <motion.div variants={fadeUp} custom={3} className="pt-2 flex justify-center">
-              <div className="glass-strong rounded-2xl p-2 sm:p-2.5 flex flex-col sm:flex-row items-center gap-2 sm:gap-3 w-full max-w-md sm:max-w-none sm:w-auto">
-                <motion.div whileHover={{ y: -1 }} whileTap={{ scale: 0.97 }} className="w-full sm:w-auto">
-                  <Button
-                    asChild
-                    size="lg"
-                    className="bg-cyan text-primary-foreground hover:bg-cyan-glow font-semibold text-base glow-cyan gap-2 px-7 rounded-xl w-full sm:w-auto"
-                  >
-                    <Link to="/auth">
-                      Launch App <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                </motion.div>
-                <Link
-                  to="/docs"
-                  className="text-sm text-silver-mute hover:text-silver transition-colors px-3 font-mono tracking-wider uppercase"
+              <motion.div whileHover={{ y: -1 }} whileTap={{ scale: 0.97 }}>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="glass border-silver/20 text-silver hover:text-foreground hover:border-cyan/40 font-semibold text-base gap-2 px-7 rounded-xl"
                 >
-                  Read Docs →
-                </Link>
-              </div>
+                  <Link to="/docs">
+                    Read Docs <span aria-hidden="true">→</span>
+                  </Link>
+                </Button>
+              </motion.div>
             </motion.div>
 
             <motion.p variants={fadeUp} custom={4} className="text-[11px] text-silver-mute/80 pt-1 font-mono tracking-wider">
