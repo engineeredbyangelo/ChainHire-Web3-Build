@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Shield, CheckCircle2 } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { HeroScene } from '@/components/landing/HeroScene';
 import { FeatureWireframeCard } from '@/components/landing/FeatureWireframeCard';
