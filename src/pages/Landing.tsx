@@ -355,22 +355,23 @@ export default function Landing() {
             className="glass-strong grain rounded-3xl max-w-3xl mx-auto p-12 sm:p-16 text-center space-y-6"
           >
             <span className="inline-block text-[10px] font-mono text-silver-mute tracking-boutique uppercase">
-              Get Started
+              Coming Soon
             </span>
             <h2 className="text-4xl sm:text-6xl font-semibold tracking-[-0.03em] leading-[1.05]">
               Work <span className="text-gradient">trustlessly.</span>
             </h2>
             <p className="text-silver-mute text-base max-w-md mx-auto">
-              Connect your wallet and create your first escrow in under two minutes.
+              Read the docs to learn how ChainHire will work once we go live.
             </p>
             <motion.div whileHover={{ y: -1 }} whileTap={{ scale: 0.97 }} className="inline-block pt-2">
               <Button
                 asChild
                 size="lg"
-                className="bg-cyan text-primary-foreground hover:bg-cyan-glow font-semibold text-base glow-cyan gap-2 px-10 rounded-xl"
+                variant="outline"
+                className="glass border-silver/20 text-silver hover:text-foreground hover:border-cyan/40 font-semibold text-base gap-2 px-10 rounded-xl"
               >
-                <Link to="/auth">
-                  Launch App <ArrowRight className="h-4 w-4" />
+                <Link to="/docs">
+                  Read Docs <span aria-hidden="true">→</span>
                 </Link>
               </Button>
             </motion.div>
