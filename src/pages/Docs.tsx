@@ -298,15 +298,18 @@ export default function Docs() {
             >
               <div className="aura aura-cyan w-80 h-80 -top-20 left-1/2 -translate-x-1/2 opacity-40" />
               <span className="relative inline-block text-[10px] font-mono text-silver-mute tracking-boutique uppercase">
-                Get Started
+                Coming Soon
               </span>
               <h3 className="relative text-2xl font-semibold tracking-[-0.02em] text-silver">
                 Ready to deploy your first <span className="text-gradient">escrow?</span>
               </h3>
-              <p className="relative text-silver-mute text-sm">Connect your wallet and create a contract in minutes.</p>
-              <Button asChild className="relative bg-cyan text-primary-foreground hover:bg-cyan-glow font-semibold gap-2 glow-cyan rounded-xl">
-                <Link to="/auth">Launch App <ArrowRight className="h-4 w-4" /></Link>
-              </Button>
+              <p className="relative text-silver-mute text-sm">
+                The app isn&apos;t live yet — we&apos;re making changes in the background. Keep exploring the docs while we finish the launch.
+              </p>
+              <div className="relative inline-flex items-center gap-2 text-[11px] font-mono tracking-wider text-silver-mute">
+                <span className="h-1.5 w-1.5 rounded-full bg-cyan animate-pulse shrink-0" />
+                <span>Not live yet</span>
+              </div>
             </motion.div>
           </div>
         </div>
